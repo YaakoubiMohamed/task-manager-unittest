@@ -1,0 +1,43 @@
+<h1>task manager</h1>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <label>title</label>
+    <input type="text" formControlName="title"> <br>
+    <label>description></label>
+    <textarea formControlName="description"></textarea> <br>
+    <label>priority</label>
+    <select formControlName="priority">
+        <option value="low">low</option>
+        <option value="medium">medium</option>
+        <option value="high">high</option>
+    </select><br>
+
+    <button type="submit">{{ isEditing ? 'Update' : 'Add' }} task</button>
+</form>
+
+
+<h2>Task List</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>description</th>
+            <th>priority</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for ( task of tasks; track task.id) {
+
+
+        <tr>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.priority }}</td>
+            <td>
+                <button (click)="editTask(task)">Edit</button>
+                <button (click)="deleteTask(task)">Delete</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
