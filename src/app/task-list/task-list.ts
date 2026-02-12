@@ -40,6 +40,7 @@ export class TaskList {
   }
 
   deleteTask(task: Task){
+    console.log('Deleting task:', task);
     this.taskmanager.deleteTask(task.id);
     this.tasks = this.taskmanager.getTasks();
   }
