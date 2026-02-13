@@ -1,43 +1,69 @@
-<h1>task manager</h1>
-<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-    <label>title</label>
-    <input type="text" formControlName="title"> <br>
-    <label>description></label>
-    <textarea formControlName="description"></textarea> <br>
-    <label>priority</label>
-    <select formControlName="priority">
-        <option value="low">low</option>
-        <option value="medium">medium</option>
-        <option value="high">high</option>
-    </select><br>
+<div class="container py-4">
+  <h1 class="text-center mb-4">Task Manager</h1>
+  
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">{{ isEditing ? 'Edit Task' : 'Add New Task' }}</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-control" formControlName="title" placeholder="Enter task title">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter task description"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Priority</label>
+          <select class="form-select" formControlName="priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-success">
+          {{ isEditing ? 'Update Task' : 'Add Task' }}
+        </button>
+      </form>
+    </div>
+  </div>
 
-    <button type="submit">{{ isEditing ? 'Update' : 'Add' }} task</button>
-</form>
-
-
-<h2>Task List</h2>
-<table>
-    <thead>
-        <tr>
+  <div class="card">
+    <div class="card-header bg-secondary text-white">
+      <h5 class="mb-0">Task List</h5>
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-striped table-hover mb-0">
+        <thead class="table-dark">
+          <tr>
             <th>Title</th>
-            <th>description</th>
-            <th>priority</th>
+            <th>Description</th>
+            <th>Priority</th>
             <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @for ( task of tasks; track task.id) {
-
-
-        <tr>
-            <td>{{ task.title }}</td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.priority }}</td>
-            <td>
-                <button (click)="editTask(task)">Edit</button>
-                <button (click)="deleteTask(task)">Delete</button>
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
+          </tr>
+        </thead>
+        <tbody>
+          @for (task of tasks; track task.id) {
+            <tr>
+              <td>{{ task.title }}</td>
+              <td>{{ task.description }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-danger': task.priority === 'High',
+                  'bg-warning text-dark': task.priority === 'Medium',
+                  'bg-success': task.priority === 'Low'
+                }">{{ task.priority }}</span>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="editTask(task)">Edit</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task)">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -7,9 +7,14 @@ import { Task } from './task';
 export class TaskManager {
   
   private tasks: Task[] = [];
+  private nextId: number = 1;
 
-  addTask(task: Task): void {
-    this.tasks.push(task);
+  addTask(task: Omit<Task, 'id'>): void {
+    const newTask: Task = {
+      ...task,
+      id: this.nextId++
+    };
+    this.tasks.push(newTask);
   }
 
   getTasks(): Task[] {

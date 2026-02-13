@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
+import { NgClass } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TaskManager } from '../task-manager';
 import { Task } from '../task';
 
 @Component({
   selector: 'app-task-list',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './task-list.html',
   styleUrl: './task-list.css',
 })
@@ -53,7 +54,7 @@ export class TaskList {
       this.taskForm.reset();
     }
     else {
-    this.taskmanager.addTask(this.taskForm.value as Task);
+    this.taskmanager.addTask(this.taskForm.value as Omit<Task, 'id'>);
     this.tasks = this.taskmanager.getTasks();
     this.taskForm.reset();
     }
